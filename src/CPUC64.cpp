@@ -423,13 +423,15 @@ void CPUC64::checkciatimers(uint8_t cycles) {
 }
 
 void CPUC64::logDebugInfo() {
-  if (debug &&
-      (debuggingstarted || (debugstartaddr == 0) || (pc == debugstartaddr))) {
+  // if (debug && (debuggingstarted || (debugstartaddr == 0) || (pc == debugstartaddr))) {
+  if (debug && (pc < 0xfd6e || pc > 0xfd84)) {
     debuggingstarted = true;
-    ESP_LOGI(TAG, "pc: %2x, cmd: %s, a: %x, x: %x, y: %x, sp: %x, sr: %x", pc,
+    // debug (use LOGE because LOGI doesn't work here...)
+    ESP_LOGE(TAG, "pc: %2x, cmd: %s, a: %x, x: %x, y: %x, sp: %x, sr: %x", pc,
              cmdName[getMem(pc)], a, x, y, sp, sr);
   }
 }
+
 
 void CPUC64::vTaskDelayUntilUS(int64_t lastMeasuredTime,
                                uint32_t timeIncrement) {

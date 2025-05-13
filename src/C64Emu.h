@@ -16,7 +16,7 @@
 */
 #ifndef C64EMU_H
 #define C64EMU_H
-
+#include "USBKB.h"
 #include "BLEKB.h"
 #include "CPUC64.h"
 #include "ConfigBoard.h"
@@ -46,31 +46,35 @@ private:
     }
   }
 
-  uint8_t *ram;
   ConfigBoard configBoard;
   VIC vic;
-
+  
   uint16_t checkForKeyboardCnt = 0;
-
+  
   uint16_t cntSecondsForBatteryCheck;
-
+  
   hw_timer_t *interruptProfilingBatteryCheck = NULL;
   hw_timer_t *interruptTOD = NULL;
   hw_timer_t *interruptSystem = NULL;
   TaskHandle_t cpuTask;
-
+  
   void interruptTODFunc();
   void interruptSystemFunc();
   void interruptProfilingBatteryCheckFunc();
   void cpuCode(void *parameter);
   bool updateTOD(CIA &cia);
-
+  
   adc_oneshot_unit_handle_t adc1_handle;
   adc_cali_handle_t adc_cali_handle;
-
+  
 public:
+  uint8_t *ram;
   CPUC64 cpu;
-  BLEKB blekb;
+  #ifdef USE_USBKB
+    USBKB blekb;
+  #else
+    BLEKB blekb;
+  #endif
   ExternalCmds externalCmds;
   bool perf = false;
   bool showperfvalues = false;

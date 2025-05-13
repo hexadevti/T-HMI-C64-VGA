@@ -21,16 +21,18 @@
 #include <esp_adc/adc_oneshot.h>
 
 struct Config {
-
+#define BOARD_T_HMI
 #if defined(BOARD_T_HMI)
-#define USE_ST7789V
+//#define USE_ST7789V
+#define USE_USBKB
+#define USE_VGADISPLAY
 #define USE_SDCARD
-#define USE_JOYSTICK
+//#define USE_JOYSTICK
 #define USE_NOSOUND
 
   static const uint8_t PWR_EN = 10;
-  static const uint8_t PWR_ON = 14;
-  static const adc_channel_t BAT_ADC = ADC_CHANNEL_4; // GPIO5
+  static const uint8_t PWR_ON = 18;
+  static const adc_channel_t BAT_ADC = ADC_CHANNEL_3; // GPIO5
 
   // ST7789V
   static const uint8_t BL = 38;
@@ -46,21 +48,32 @@ struct Config {
   static const uint8_t D6 = 45;
   static const uint8_t D7 = 46;
 
+// VGA Display
+
+  static const uint8_t RED0 = 5;
+  static const uint8_t RED1 = 6;
+  static const uint8_t GREEN0 = 7;
+  static const uint8_t GREEN1 = 15;
+  static const uint8_t BLUE0 = 16;
+  static const uint8_t BLUE1 = 17;
+  static const uint8_t HSYNC = 14;
+  static const uint8_t VSYNC = 13;
+
   // DisplayDriver (considering a possible rotation)
   static const uint16_t LCDWIDTH = 320;
   static const uint16_t LCDHEIGHT = 240;
   static const uint8_t REFRESHDELAY = 1;
 
   // SDCard
-  static const uint8_t SD_MISO_PIN = 13;
-  static const uint8_t SD_MOSI_PIN = 11;
-  static const uint8_t SD_SCLK_PIN = 12;
+  static const uint8_t SD_MISO_PIN = 8;
+  static const uint8_t SD_MOSI_PIN = 3;
+  static const uint8_t SD_SCLK_PIN = 18;
 
   // Joystick
-  static const adc_channel_t ADC_JOYSTICK_X = ADC_CHANNEL_4;
-  static const adc_channel_t ADC_JOYSTICK_Y = ADC_CHANNEL_5;
-  static const uint8_t JOYSTICK_FIRE_PIN = 18;
-  static const uint8_t JOYSTICK_FIRE2_PIN = 17;
+  static const adc_channel_t ADC_JOYSTICK_X = ADC_CHANNEL_3;
+  static const adc_channel_t ADC_JOYSTICK_Y = ADC_CHANNEL_3;
+  static const uint8_t JOYSTICK_FIRE_PIN = 20;
+  static const uint8_t JOYSTICK_FIRE2_PIN = 21;
 
 #elif defined(BOARD_T_DISPLAY_S3)
 #define USE_RM67162

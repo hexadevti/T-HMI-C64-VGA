@@ -21,6 +21,8 @@
 #include "DisplayDriver.h"
 #if defined(USE_ST7789V)
 #include "ST7789V.h"
+#elif defined(USE_VGADISPLAY)
+#include "VGADISPLAY.h"
 #elif defined(USE_RM67162)
 #include "RM67162.h"
 #elif defined(USE_ST7789VSERIAL)
@@ -35,6 +37,8 @@ struct ConfigDisplay {
   ConfigDisplay() { displayDriver = new RM67162(); }
 #elif defined(USE_ST7789VSERIAL)
   ConfigDisplay() { displayDriver = new ST7789VSerial(); }
+#elif defined(USE_VGADISPLAY)
+  ConfigDisplay() { displayDriver = new VGADISPLAY(); }
 #endif
 };
 
